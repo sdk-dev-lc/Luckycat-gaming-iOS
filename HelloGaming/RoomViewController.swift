@@ -65,7 +65,7 @@ class RoomViewController: UIViewController {
     
     func loadAgoraKit() {
         agoraKit = AgoraRtcEngineKitForGaming.sharedEngine(withAppId: KeyCenter.AppId, delegate: self)
-        agoraKit.setChannelProfile(AgoraRtcChannelProfile.channelProfile_Game_Command_Mode)
+        agoraKit.setChannelProfile(AgoraRtcChannelProfile.channelProfile_Game_Free_Mode)
     }
 }
 
