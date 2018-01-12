@@ -21,7 +21,7 @@ class RoomViewController: UIViewController {
     var roomName: String!
     weak var delegate: RoomVCDelegate?
     
-    fileprivate var agoraKit: AgoraRtcEngineKitForGaming!
+    fileprivate var agoraKit: AgoraRtcEngineKit!
     
     fileprivate var logs = [String]()
     
@@ -64,7 +64,7 @@ class RoomViewController: UIViewController {
     }
     
     func loadAgoraKit() {
-        agoraKit = AgoraRtcEngineKitForGaming.sharedEngine(withAppId: KeyCenter.AppId, delegate: self)
+        agoraKit = AgoraRtcEngineKit.sharedEngine(withAppId: KeyCenter.AppId, delegate: self)
         agoraKit.setChannelProfile(AgoraRtcChannelProfile.channelProfile_Game_Free_Mode)
     }
 }
@@ -122,7 +122,7 @@ private extension RoomViewController {
         // workaround/waiting SDK initialize
         sleep(1)
         
-        let code = agoraKit.joinChannel(roomName, info: nil, uid: 0)
+        let code = agoraKit.joinChannel(byKey:nil, channelName: roomName, info: nil, uid: 0)
 
         if code != 0 {
             DispatchQueue.main.async(execute: {
@@ -137,36 +137,36 @@ private extension RoomViewController {
     }
 }
 
-extension RoomViewController: AgoraRtcEngineKitForGamingDelegate {
-    func rtcEngineConnectionDidInterrupted(_ engine: AgoraRtcEngineKitForGaming!) {
+extension RoomViewController: AgoraRtcEngineDelegate{
+    func rtcEngineConnectionDidInterrupted(_ engine: AgoraRtcEngineKit!) {
         append(log: "Connection Interrupted")
     }
 
-    func rtcEngineConnectionDidLost(_ engine: AgoraRtcEngineKitForGaming!) {
+    func rtcEngineConnectionDidLost(_ engine: AgoraRtcEngineKit!) {
         append(log: "Connection Lost")
     }
 
-    func rtcEngineRequestChannelKey(_ engine: AgoraRtcEngineKitForGaming!) {
+    func rtcEngineRequestChannelKey(_ engine: AgoraRtcEngineKit!) {
         append(log: "rtcEngineRequestChannelKey")
     }
 
-    func rtcEngine(_ engine: AgoraRtcEngineKitForGaming!, didOccurError errorCode: AgoraRtcErrorCode) {
+    func rtcEngine(_ engine: AgoraRtcEngineKit!, didOccurError errorCode: AgoraRtcErrorCode) {
         append(log: "Occur error: \(errorCode.rawValue)")
     }
     
-    func rtcEngine(_ engine: AgoraRtcEngineKitForGaming!, didJoinChannel channel: String!, withUid uid: UInt, elapsed: Int) {
+    func rtcEngine(_ engine: AgoraRtcEngineKit!, didJoinChannel channel: String!, withUid uid: UInt, elapsed: Int) {
         append(log: "Did joined channel: \(channel!), with uid: \(uid), elapsed: \(elapsed)")
     }
     
-    func rtcEngine(_ engine: AgoraRtcEngineKitForGaming!, didJoinedOfUid uid: UInt, elapsed: Int) {
+    func rtcEngine(_ engine: AgoraRtcEngineKit!, didJoinedOfUid uid: UInt, elapsed: Int) {
         append(log: "Did joined of uid: \(uid)")
     }
     
-    func rtcEngine(_ engine: AgoraRtcEngineKitForGaming!, didOfflineOfUid uid: UInt, reason: AgoraRtcUserOfflineReason) {
+    func rtcEngine(_ engine: AgoraRtcEngineKit!, didOfflineOfUid uid: UInt, reason: AgoraRtcUserOfflineReason) {
         append(log: "Did offline of uid: \(uid), reason: \(reason.rawValue)")
     }
     
-    func rtcEngine(_ engine: AgoraRtcEngineKitForGaming!, audioQualityOfUid uid: UInt, quality: AgoraRtcQuality, delay: UInt, lost: UInt) {
+    func rtcEngine(_ engine: AgoraRtcEngineKit!, audioQualityOfUid uid: UInt, quality: AgoraRtcQuality, delay: UInt, lost: UInt) {
         append(log: "Audio Quality of uid: \(uid), quality: \(quality.rawValue), delay: \(delay), lost: \(lost)")
     }
 }
