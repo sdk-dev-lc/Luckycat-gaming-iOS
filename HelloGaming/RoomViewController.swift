@@ -138,35 +138,35 @@ private extension RoomViewController {
 }
 
 extension RoomViewController: AgoraRtcEngineDelegate{
-    func rtcEngineConnectionDidInterrupted(_ engine: AgoraRtcEngineKit!) {
+    func rtcEngineConnectionDidInterrupted(_ engine: AgoraRtcEngineKit) {
         append(log: "Connection Interrupted")
     }
 
-    func rtcEngineConnectionDidLost(_ engine: AgoraRtcEngineKit!) {
+    func rtcEngineConnectionDidLost(_ engine: AgoraRtcEngineKit) {
         append(log: "Connection Lost")
     }
 
-    func rtcEngineRequestChannelKey(_ engine: AgoraRtcEngineKit!) {
+    func rtcEngineRequestChannelKey(_ engine: AgoraRtcEngineKit) {
         append(log: "rtcEngineRequestChannelKey")
     }
 
-    func rtcEngine(_ engine: AgoraRtcEngineKit!, didOccurError errorCode: AgoraRtcErrorCode) {
+    func rtcEngine(_ engine: AgoraRtcEngineKit, didOccurError errorCode: AgoraRtcErrorCode) {
         append(log: "Occur error: \(errorCode.rawValue)")
     }
     
-    func rtcEngine(_ engine: AgoraRtcEngineKit!, didJoinChannel channel: String!, withUid uid: UInt, elapsed: Int) {
-        append(log: "Did joined channel: \(channel!), with uid: \(uid), elapsed: \(elapsed)")
+    func rtcEngine(_ engine: AgoraRtcEngineKit, didJoinChannel channel: String, withUid uid: UInt, elapsed: Int) {
+        append(log: "Did joined channel: \(channel), with uid: \(uid), elapsed: \(elapsed)")
     }
     
-    func rtcEngine(_ engine: AgoraRtcEngineKit!, didJoinedOfUid uid: UInt, elapsed: Int) {
+    func rtcEngine(_ engine: AgoraRtcEngineKit, didJoinedOfUid uid: UInt, elapsed: Int) {
         append(log: "Did joined of uid: \(uid)")
     }
     
-    func rtcEngine(_ engine: AgoraRtcEngineKit!, didOfflineOfUid uid: UInt, reason: AgoraRtcUserOfflineReason) {
+    func rtcEngine(_ engine: AgoraRtcEngineKit, didOfflineOfUid uid: UInt, reason: AgoraRtcUserOfflineReason) {
         append(log: "Did offline of uid: \(uid), reason: \(reason.rawValue)")
     }
     
-    func rtcEngine(_ engine: AgoraRtcEngineKit!, audioQualityOfUid uid: UInt, quality: AgoraRtcQuality, delay: UInt, lost: UInt) {
+    func rtcEngine(_ engine: AgoraRtcEngineKit, audioQualityOfUid uid: UInt, quality: AgoraRtcQuality, delay: UInt, lost: UInt) {
         append(log: "Audio Quality of uid: \(uid), quality: \(quality.rawValue), delay: \(delay), lost: \(lost)")
     }
 }
