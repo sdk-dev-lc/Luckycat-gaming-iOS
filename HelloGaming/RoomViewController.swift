@@ -65,7 +65,7 @@ class RoomViewController: UIViewController {
     
     func loadAgoraKit() {
         agoraKit = AgoraRtcEngineKit.sharedEngine(withAppId: KeyCenter.AppId, delegate: self)
-        agoraKit.setChannelProfile(AgoraRtcChannelProfile.channelProfile_Game_Free_Mode)
+        agoraKit.setChannelProfile(.gameFreeMode)
     }
 }
 
@@ -122,7 +122,7 @@ private extension RoomViewController {
         // workaround/waiting SDK initialize
         sleep(1)
         
-        let code = agoraKit.joinChannel(byKey:nil, channelName: roomName, info: nil, uid: 0)
+        let code = agoraKit.joinChannel(byToken:nil, channelId: roomName, info: nil, uid: 0)
 
         if code != 0 {
             DispatchQueue.main.async(execute: {
@@ -150,7 +150,7 @@ extension RoomViewController: AgoraRtcEngineDelegate{
         append(log: "rtcEngineRequestChannelKey")
     }
 
-    func rtcEngine(_ engine: AgoraRtcEngineKit, didOccurError errorCode: AgoraRtcErrorCode) {
+    func rtcEngine(_ engine: AgoraRtcEngineKit, didOccurError errorCode: AgoraErrorCode) {
         append(log: "Occur error: \(errorCode.rawValue)")
     }
     
@@ -162,11 +162,11 @@ extension RoomViewController: AgoraRtcEngineDelegate{
         append(log: "Did joined of uid: \(uid)")
     }
     
-    func rtcEngine(_ engine: AgoraRtcEngineKit, didOfflineOfUid uid: UInt, reason: AgoraRtcUserOfflineReason) {
+    func rtcEngine(_ engine: AgoraRtcEngineKit, didOfflineOfUid uid: UInt, reason: AgoraUserOfflineReason) {
         append(log: "Did offline of uid: \(uid), reason: \(reason.rawValue)")
     }
     
-    func rtcEngine(_ engine: AgoraRtcEngineKit, audioQualityOfUid uid: UInt, quality: AgoraRtcQuality, delay: UInt, lost: UInt) {
+    func rtcEngine(_ engine: AgoraRtcEngineKit, audioQualityOfUid uid: UInt, quality: AgoraNetworkQuality, delay: UInt, lost: UInt) {
         append(log: "Audio Quality of uid: \(uid), quality: \(quality.rawValue), delay: \(delay), lost: \(lost)")
     }
 }
